@@ -136,5 +136,4 @@ public class KMapIndicator {
 		this.size = size;
 	}
 	
-	
 }

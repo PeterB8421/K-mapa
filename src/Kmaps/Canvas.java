@@ -134,8 +134,10 @@ public class Canvas extends JPanel implements ActionListener, MouseListener {
                             }
                         }
                 }
-                kMapIndicators.get(i).add(new KMapIndicator(new Point(indicators.get(i).get(((k == 3 && this.valueCount == 3) ? 2 : k)).getPosition().x + 500, 
-                        indicators.get(i).get(((k == 3 && this.valueCount == 3) ? 2 : k)).getPosition().y), 20, false, vars));
+                kMapIndicators.get(i).add(new KMapIndicator(new Point(indicators.get(i).get(((k == 3 && this.valueCount == 3) ? 2 : k)).getPosition().x + 500 +
+                                ((k == 3 && this.valueCount == 3)?indicators.get(i).get(((k == 3 && this.valueCount == 3) ? 2 : k)).getSIZE():0), 
+                        indicators.get(i).get(((k == 3 && this.valueCount == 3) ? 2 : k)).getPosition().y),
+                        20, false, new ArrayList<>(vars)));
                 vars.clear();
             }
         }
@@ -310,8 +312,8 @@ public class Canvas extends JPanel implements ActionListener, MouseListener {
                         area = new Area(new Line2D.Double(kMapIndicators.get(1).get(0).getPosition().x - 10, kMapIndicators.get(1).get(0).getPosition().y,
                                 kMapIndicators.get(1).get(0).getPosition().x - 10, kMapIndicators.get(1).get(0).getPosition().y + kMapIndicators.get(1).get(0).getSize()));
                         g2d.fill(area);
-                        g2d.drawString("b", kMapIndicators.get(1).get(1).getPosition().x + kMapIndicators.get(1).get(1).getSize(), 
-                                kMapIndicators.get(1).get(1).getPosition().y + (kMapIndicators.get(1).get(1).getPosition().y + 10));
+                        g2d.drawString("b", kMapIndicators.get(1).get(1).getPosition().x + kMapIndicators.get(1).get(1).getSize()/2, 
+                                kMapIndicators.get(1).get(1).getPosition().y + kMapIndicators.get(1).get(1).getSize()+10);
                         area = new Area(new Line2D.Double(kMapIndicators.get(1).get(0).getPosition().x, kMapIndicators.get(1).get(0).getPosition().y,
                                 kMapIndicators.get(1).get(0).getPosition().x + kMapIndicators.get(1).get(1).getSize(), kMapIndicators.get(1).get(0).getPosition().y));
                         g2d.fill(area);
@@ -369,6 +371,25 @@ public class Canvas extends JPanel implements ActionListener, MouseListener {
         this.changeEquationString();
         this.repaint();
     }
+    
+    private void changeKMapValues(ArrayList <Boolean> vars){
+        for(int i = 0; i < kMapIndicators.size(); i++){
+            for(int k = 0; k < kMapIndicators.get(i).size(); k++){
+                if(vars.equals(kMapIndicators.get(i).get(k).getVariables()))
+                    kMapIndicators.get(i).get(k).setValue(true);
+               /* else
+                    kMapIndicators.get(i).get(k).setValue(false);*/
+            }
+        }
+    }
+    
+    private void resetKMapValues(){
+        for(int i = 0; i < kMapIndicators.size(); i++){
+            for(int k = 0; k < kMapIndicators.get(i).size(); k++){
+                kMapIndicators.get(i).get(k).setValue(false);
+            }
+        }
+    }
 
     public ArrayList<ArrayList<Indicator>> getIndicators() {
         return indicators;
@@ -392,14 +413,29 @@ public class Canvas extends JPanel implements ActionListener, MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         System.out.println("Myš klikla");
-        outputs.forEach(o -> {
+        boolean elementIsTrue = false;
+        ArrayList <Boolean> varList = new ArrayList <>(); //Pole proměnných v daném řádku, na který uživatel klikl
+        int index = 0;
+        for(Changeable o : outputs){
             Area output = new Area(new Rectangle2D.Double(o.getPosition().x, o.getPosition().y, o.getSIZE(), o.getSIZE()));
             if (output.contains(e.getPoint())) {
                 o.clicked();
+                for(int i = 0; i < 4; i++){//Nastavení proměnných přidáním do pole
+                    if(i < this.valueCount)
+                        varList.add(indicators.get(index).get(i).getValue());
+                    else
+                        varList.add(false);
+                }
+                this.changeKMapValues(varList);//Změna potřebného prvku K-mapy na true
                 this.changeEquationString();
                 this.repaint();
             }
-        });
+            if(o.getValue())
+                elementIsTrue = true;
+            index++;
+        }
+        if(!elementIsTrue)
+            this.resetKMapValues();
     }
 
     @Override
