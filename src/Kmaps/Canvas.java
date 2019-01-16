@@ -41,6 +41,7 @@ public class Canvas extends JPanel implements ActionListener, MouseListener {
 //Výstupní textové pole pro výpis rovnice
     private JLabel optimizedEquationOutput;//Výstupní textové pole pro výpis upravené rovnice
     private ArrayList<ArrayList<KMapIndicator>> kMapIndicators;
+    private ArrayList<KMapIndicator> trueKMapInds = new ArrayList<>();
 
     public Canvas(mainWindow window, int values, JLabel outputLabel, JLabel optimizedEq) {
         this.kMapIndicators = new ArrayList<>();
@@ -72,8 +73,10 @@ public class Canvas extends JPanel implements ActionListener, MouseListener {
     private void initKMapTableValues() {
         ArrayList<Boolean> vars = new ArrayList<>();
         for (int i = 0; i < (this.valueCount == 3 ? 2 : this.valueCount); i++) { //i = číslo řádku
-            if(this.valueCount == 3 && i == 2)//Vykreslení mapy pro 3 proměnné je menší vyjímka
+            if (this.valueCount == 3 && i == 2)//Vykreslení mapy pro 3 proměnné je menší vyjímka
+            {
                 continue;
+            }
             kMapIndicators.add(new ArrayList<>());
             for (int k = 0; k < (this.valueCount == 3 ? 4 : this.valueCount); k++) { //k = číslo sloupce
                 switch (this.valueCount) {
@@ -90,15 +93,15 @@ public class Canvas extends JPanel implements ActionListener, MouseListener {
                                     default:
                                         break;
                                 }
-                            }
-                            else
+                            } else {
                                 vars.add(false);//c, d
+                            }
                         }
                         break;
                     case 3://V případě 3 proměnných
-                        for(int j = 0; j < 4; j++){
-                            if(j < this.valueCount){
-                                switch (j){
+                        for (int j = 0; j < 4; j++) {
+                            if (j < this.valueCount) {
+                                switch (j) {
                                     case 0://a
                                         vars.add(i != 0);
                                         break;
@@ -111,14 +114,14 @@ public class Canvas extends JPanel implements ActionListener, MouseListener {
                                     default:
                                         break;
                                 }
-                            }
-                            else
+                            } else {
                                 vars.add(false);//d
+                            }
                         }
                         break;
                     case 4://V případě 4 proměnných
-                        for(int j = 0; j < 4; j++){
-                            switch(j){
+                        for (int j = 0; j < 4; j++) {
+                            switch (j) {
                                 case 0://a
                                     vars.add(i == 2 || i == 3);
                                     break;
@@ -134,8 +137,8 @@ public class Canvas extends JPanel implements ActionListener, MouseListener {
                             }
                         }
                 }
-                kMapIndicators.get(i).add(new KMapIndicator(new Point(indicators.get(i).get(((k == 3 && this.valueCount == 3) ? 2 : k)).getPosition().x + 500 +
-                                ((k == 3 && this.valueCount == 3)?indicators.get(i).get(((k == 3 && this.valueCount == 3) ? 2 : k)).getSIZE():0), 
+                kMapIndicators.get(i).add(new KMapIndicator(new Point(indicators.get(i).get(((k == 3 && this.valueCount == 3) ? 2 : k)).getPosition().x + 500
+                        + ((k == 3 && this.valueCount == 3) ? indicators.get(i).get(((k == 3 && this.valueCount == 3) ? 2 : k)).getSIZE() : 0),
                         indicators.get(i).get(((k == 3 && this.valueCount == 3) ? 2 : k)).getPosition().y),
                         20, false, new ArrayList<>(vars)));
                 vars.clear();
@@ -295,29 +298,44 @@ public class Canvas extends JPanel implements ActionListener, MouseListener {
         g2d.drawString("s", outputs.get(0).getPosition().x + outputs.get(0).getSIZE() / 2, outputs.get(0).getPosition().y - outputs.get(0).getSIZE() / 2);
         for (int i = 0; i < kMapIndicators.size(); i++) {
             for (int k = 0; k < kMapIndicators.get(i).size(); k++) {
-                area = new Area(new Rectangle2D.Double(kMapIndicators.get(i).get(k).getPosition().x, kMapIndicators.get(i).get(k).getPosition().y, 
+                area = new Area(new Rectangle2D.Double(kMapIndicators.get(i).get(k).getPosition().x, kMapIndicators.get(i).get(k).getPosition().y,
                         kMapIndicators.get(i).get(k).getSize(), kMapIndicators.get(i).get(k).getSize()));
                 g2d.setColor(kMapIndicators.get(i).get(k).getBackgroundColor());
                 g2d.fill(area);
                 g2d.setColor(kMapIndicators.get(i).get(k).getStrokeColor());
                 g2d.draw(area);
-                g2d.setColor(kMapIndicators.get(i).get(k).getValue() ? Color.BLUE : Color.RED);
+                g2d.setColor(kMapIndicators.get(i).get(k).getValue() ? new Color(0, 230, 230) : Color.RED);
                 g2d.drawString(kMapIndicators.get(i).get(k).getValue() ? "1" : "0", kMapIndicators.get(i).get(k).getPosition().x + kMapIndicators.get(i).get(k).getSize() / 2,
                         kMapIndicators.get(i).get(k).getPosition().y + kMapIndicators.get(i).get(k).getSize() / 2);
-                switch(this.valueCount){
+                switch (this.valueCount) {
                     case 2:
                         g2d.setColor(Color.BLACK);
                         g2d.drawString("a", kMapIndicators.get(1).get(0).getPosition().x - (kMapIndicators.get(1).get(0).getSize() - 10),
                                 kMapIndicators.get(1).get(0).getPosition().y + kMapIndicators.get(1).get(0).getSize());
-                        area = new Area(new Line2D.Double(kMapIndicators.get(1).get(0).getPosition().x - 10, kMapIndicators.get(1).get(0).getPosition().y,
-                                kMapIndicators.get(1).get(0).getPosition().x - 10, kMapIndicators.get(1).get(0).getPosition().y + kMapIndicators.get(1).get(0).getSize()));
-                        g2d.fill(area);
-                        g2d.drawString("b", kMapIndicators.get(1).get(1).getPosition().x + kMapIndicators.get(1).get(1).getSize()/2, 
-                                kMapIndicators.get(1).get(1).getPosition().y + kMapIndicators.get(1).get(1).getSize()+10);
-                        area = new Area(new Line2D.Double(kMapIndicators.get(1).get(0).getPosition().x, kMapIndicators.get(1).get(0).getPosition().y,
-                                kMapIndicators.get(1).get(0).getPosition().x + kMapIndicators.get(1).get(1).getSize(), kMapIndicators.get(1).get(0).getPosition().y));
-                        g2d.fill(area);
+                        g2d.drawString("b", kMapIndicators.get(1).get(1).getPosition().x + kMapIndicators.get(1).get(1).getSize() / 2,
+                                kMapIndicators.get(1).get(1).getPosition().y + kMapIndicators.get(1).get(1).getSize() + 10);
                         break;
+                    case 3:
+                        g2d.setColor(Color.BLACK);
+                        g2d.drawString("a", kMapIndicators.get(1).get(0).getPosition().x - kMapIndicators.get(1).get(0).getSize(), kMapIndicators.get(1).get(0).getPosition().y + 
+                                kMapIndicators.get(1).get(0).getSize());
+                        g2d.drawString("b", kMapIndicators.get(0).get(1).getPosition().x+5, kMapIndicators.get(0).get(1).getPosition().y - kMapIndicators.get(0).get(1).getSize()/2);
+                        g2d.drawString("b", kMapIndicators.get(0).get(2).getPosition().x+5, kMapIndicators.get(0).get(2).getPosition().y - kMapIndicators.get(0).get(2).getSize()/2);
+                        g2d.drawString("c", kMapIndicators.get(1).get(2).getPosition().x+5, kMapIndicators.get(1).get(2).getPosition().y + kMapIndicators.get(1).get(2).getSize()+10);
+                        g2d.drawString("c", kMapIndicators.get(1).get(3).getPosition().x+5, kMapIndicators.get(1).get(3).getPosition().y + kMapIndicators.get(1).get(3).getSize()+10);
+                        break;
+                    case 4:
+                        g2d.setColor(Color.BLACK);
+                        g2d.drawString("a", kMapIndicators.get(2).get(0).getPosition().x - kMapIndicators.get(2).get(0).getSize(), kMapIndicators.get(2).get(0).getPosition().y
+                         + kMapIndicators.get(2).get(0).getSize());
+                        g2d.drawString("a", kMapIndicators.get(3).get(0).getPosition().x - kMapIndicators.get(3).get(0).getSize(), kMapIndicators.get(3).get(0).getPosition().y
+                         + kMapIndicators.get(3).get(0).getSize());
+                        g2d.drawString("b", kMapIndicators.get(3).get(1).getPosition().x+5, kMapIndicators.get(3).get(1).getPosition().y + kMapIndicators.get(3).get(1).getSize()+10);
+                        g2d.drawString("b", kMapIndicators.get(3).get(2).getPosition().x+5, kMapIndicators.get(3).get(2).getPosition().y + kMapIndicators.get(3).get(2).getSize()+10);
+                        g2d.drawString("c", kMapIndicators.get(1).get(3).getPosition().x + kMapIndicators.get(1).get(3).getSize()+5, kMapIndicators.get(1).get(3).getPosition().y+10);
+                        g2d.drawString("c", kMapIndicators.get(2).get(3).getPosition().x + kMapIndicators.get(2).get(3).getSize()+5, kMapIndicators.get(2).get(3).getPosition().y+10);
+                        g2d.drawString("d", kMapIndicators.get(0).get(2).getPosition().x+5, kMapIndicators.get(0).get(2).getPosition().y - kMapIndicators.get(0).get(2).getSize()/2);
+                        g2d.drawString("d", kMapIndicators.get(0).get(3).getPosition().x+5, kMapIndicators.get(0).get(3).getPosition().y - kMapIndicators.get(0).get(3).getSize()/2);
                     default:
                         break;
                 }
@@ -356,6 +374,12 @@ public class Canvas extends JPanel implements ActionListener, MouseListener {
         }
         outputLabel.setText(equation);
     }
+    
+    private void optimizeEquationString(){
+        for(int i = 0; i < trueKMapInds.size(); i++){
+            
+        }
+    }
 
     public int getValueCount() {
         return valueCount;
@@ -371,21 +395,35 @@ public class Canvas extends JPanel implements ActionListener, MouseListener {
         this.changeEquationString();
         this.repaint();
     }
-    
-    private void changeKMapValues(ArrayList <Boolean> vars){
-        for(int i = 0; i < kMapIndicators.size(); i++){
-            for(int k = 0; k < kMapIndicators.get(i).size(); k++){
-                if(vars.equals(kMapIndicators.get(i).get(k).getVariables()))
-                    kMapIndicators.get(i).get(k).setValue(true);
-               /* else
-                    kMapIndicators.get(i).get(k).setValue(false);*/
+
+    private void changeKMapValues() {
+        ArrayList<Boolean> variables = new ArrayList<>();
+        for (int j = 0; j < indicators.size(); j++) {//j = řádek indikátorů
+            if(j >= Math.pow(2, this.valueCount))
+                continue;
+            for (int l = 0; l < indicators.get(j).size(); l++) {//l = sloupec indikátorů
+                variables.add(indicators.get(j).get(l).getValue());
             }
+            if (this.valueCount != 4) {
+                for (int l = variables.size(); l < 4; l++) {
+                    variables.add(false);
+                }
+            }
+            for (int i = 0; i < kMapIndicators.size(); i++) {//i = řádek K-mapy
+                for (int k = 0; k < kMapIndicators.get(i).size(); k++) {//k = sloupec K-mapy
+                    if (variables.equals(kMapIndicators.get(i).get(k).getVariables())) {
+                        kMapIndicators.get(i).get(k).setValue(outputs.get(j).getValue());
+                    }
+                }
+            }
+            variables.clear();
         }
+
     }
-    
-    private void resetKMapValues(){
-        for(int i = 0; i < kMapIndicators.size(); i++){
-            for(int k = 0; k < kMapIndicators.get(i).size(); k++){
+
+    private void resetKMapValues() {
+        for (int i = 0; i < kMapIndicators.size(); i++) {
+            for (int k = 0; k < kMapIndicators.get(i).size(); k++) {
                 kMapIndicators.get(i).get(k).setValue(false);
             }
         }
@@ -412,50 +450,36 @@ public class Canvas extends JPanel implements ActionListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println("Myš klikla");
-        boolean elementIsTrue = false;
-        ArrayList <Boolean> varList = new ArrayList <>(); //Pole proměnných v daném řádku, na který uživatel klikl
-        int index = 0;
-        for(Changeable o : outputs){
+        //System.out.println("Myš klikla");
+        for (Changeable o : outputs) {
             Area output = new Area(new Rectangle2D.Double(o.getPosition().x, o.getPosition().y, o.getSIZE(), o.getSIZE()));
             if (output.contains(e.getPoint())) {
                 o.clicked();
-                for(int i = 0; i < 4; i++){//Nastavení proměnných přidáním do pole
-                    if(i < this.valueCount)
-                        varList.add(indicators.get(index).get(i).getValue());
-                    else
-                        varList.add(false);
-                }
-                this.changeKMapValues(varList);//Změna potřebného prvku K-mapy na true
                 this.changeEquationString();
-                this.repaint();
             }
-            if(o.getValue())
-                elementIsTrue = true;
-            index++;
+            this.changeKMapValues();//Změna potřebného prvku K-mapy na true
+            this.repaint();
         }
-        if(!elementIsTrue)
-            this.resetKMapValues();
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        System.out.println("Myš stisknuta");
+        //System.out.println("Myš stisknuta");
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        System.out.println("Tlačítko myši puštěno");
+        //System.out.println("Tlačítko myši puštěno");
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        System.out.println("Myš vstoupila do objektu");
+        //System.out.println("Myš vstoupila do objektu");
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        System.out.println("Myš vystoupila z objektu");
+        //System.out.println("Myš vystoupila z objektu");
     }
 
 }
