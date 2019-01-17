@@ -16,9 +16,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Area;
-import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -317,25 +318,25 @@ public class Canvas extends JPanel implements ActionListener, MouseListener {
                         break;
                     case 3:
                         g2d.setColor(Color.BLACK);
-                        g2d.drawString("a", kMapIndicators.get(1).get(0).getPosition().x - kMapIndicators.get(1).get(0).getSize(), kMapIndicators.get(1).get(0).getPosition().y + 
-                                kMapIndicators.get(1).get(0).getSize());
-                        g2d.drawString("b", kMapIndicators.get(0).get(1).getPosition().x+5, kMapIndicators.get(0).get(1).getPosition().y - kMapIndicators.get(0).get(1).getSize()/2);
-                        g2d.drawString("b", kMapIndicators.get(0).get(2).getPosition().x+5, kMapIndicators.get(0).get(2).getPosition().y - kMapIndicators.get(0).get(2).getSize()/2);
-                        g2d.drawString("c", kMapIndicators.get(1).get(2).getPosition().x+5, kMapIndicators.get(1).get(2).getPosition().y + kMapIndicators.get(1).get(2).getSize()+10);
-                        g2d.drawString("c", kMapIndicators.get(1).get(3).getPosition().x+5, kMapIndicators.get(1).get(3).getPosition().y + kMapIndicators.get(1).get(3).getSize()+10);
+                        g2d.drawString("a", kMapIndicators.get(1).get(0).getPosition().x - kMapIndicators.get(1).get(0).getSize(), kMapIndicators.get(1).get(0).getPosition().y
+                                + kMapIndicators.get(1).get(0).getSize());
+                        g2d.drawString("b", kMapIndicators.get(0).get(1).getPosition().x + 5, kMapIndicators.get(0).get(1).getPosition().y - kMapIndicators.get(0).get(1).getSize() / 2);
+                        g2d.drawString("b", kMapIndicators.get(0).get(2).getPosition().x + 5, kMapIndicators.get(0).get(2).getPosition().y - kMapIndicators.get(0).get(2).getSize() / 2);
+                        g2d.drawString("c", kMapIndicators.get(1).get(2).getPosition().x + 5, kMapIndicators.get(1).get(2).getPosition().y + kMapIndicators.get(1).get(2).getSize() + 10);
+                        g2d.drawString("c", kMapIndicators.get(1).get(3).getPosition().x + 5, kMapIndicators.get(1).get(3).getPosition().y + kMapIndicators.get(1).get(3).getSize() + 10);
                         break;
                     case 4:
                         g2d.setColor(Color.BLACK);
                         g2d.drawString("a", kMapIndicators.get(2).get(0).getPosition().x - kMapIndicators.get(2).get(0).getSize(), kMapIndicators.get(2).get(0).getPosition().y
-                         + kMapIndicators.get(2).get(0).getSize());
+                                + kMapIndicators.get(2).get(0).getSize());
                         g2d.drawString("a", kMapIndicators.get(3).get(0).getPosition().x - kMapIndicators.get(3).get(0).getSize(), kMapIndicators.get(3).get(0).getPosition().y
-                         + kMapIndicators.get(3).get(0).getSize());
-                        g2d.drawString("b", kMapIndicators.get(3).get(1).getPosition().x+5, kMapIndicators.get(3).get(1).getPosition().y + kMapIndicators.get(3).get(1).getSize()+10);
-                        g2d.drawString("b", kMapIndicators.get(3).get(2).getPosition().x+5, kMapIndicators.get(3).get(2).getPosition().y + kMapIndicators.get(3).get(2).getSize()+10);
-                        g2d.drawString("c", kMapIndicators.get(1).get(3).getPosition().x + kMapIndicators.get(1).get(3).getSize()+5, kMapIndicators.get(1).get(3).getPosition().y+10);
-                        g2d.drawString("c", kMapIndicators.get(2).get(3).getPosition().x + kMapIndicators.get(2).get(3).getSize()+5, kMapIndicators.get(2).get(3).getPosition().y+10);
-                        g2d.drawString("d", kMapIndicators.get(0).get(2).getPosition().x+5, kMapIndicators.get(0).get(2).getPosition().y - kMapIndicators.get(0).get(2).getSize()/2);
-                        g2d.drawString("d", kMapIndicators.get(0).get(3).getPosition().x+5, kMapIndicators.get(0).get(3).getPosition().y - kMapIndicators.get(0).get(3).getSize()/2);
+                                + kMapIndicators.get(3).get(0).getSize());
+                        g2d.drawString("b", kMapIndicators.get(3).get(1).getPosition().x + 5, kMapIndicators.get(3).get(1).getPosition().y + kMapIndicators.get(3).get(1).getSize() + 10);
+                        g2d.drawString("b", kMapIndicators.get(3).get(2).getPosition().x + 5, kMapIndicators.get(3).get(2).getPosition().y + kMapIndicators.get(3).get(2).getSize() + 10);
+                        g2d.drawString("c", kMapIndicators.get(1).get(3).getPosition().x + kMapIndicators.get(1).get(3).getSize() + 5, kMapIndicators.get(1).get(3).getPosition().y + 10);
+                        g2d.drawString("c", kMapIndicators.get(2).get(3).getPosition().x + kMapIndicators.get(2).get(3).getSize() + 5, kMapIndicators.get(2).get(3).getPosition().y + 10);
+                        g2d.drawString("d", kMapIndicators.get(0).get(2).getPosition().x + 5, kMapIndicators.get(0).get(2).getPosition().y - kMapIndicators.get(0).get(2).getSize() / 2);
+                        g2d.drawString("d", kMapIndicators.get(0).get(3).getPosition().x + 5, kMapIndicators.get(0).get(3).getPosition().y - kMapIndicators.get(0).get(3).getSize() / 2);
                     default:
                         break;
                 }
@@ -344,15 +345,15 @@ public class Canvas extends JPanel implements ActionListener, MouseListener {
     }
 
     private void changeEquationString() {
-        String equation = "S = ";
+        String equation = "S=";
         for (int i = 0; i < outputs.size(); i++) {
             if (outputs.get(i).getValue()) {
                 if (i != 0) {
-                    equation += " + ";
+                    equation += "+";
                 }
                 for (int k = 0; k < indicators.get(i).size(); k++) {
                     if (k != 0) {
-                        equation += " * ";
+                        equation += "*";
                     }
                     equation += indicators.get(i).get(k).getValue() ? "" : "!";
                     switch (k) {
@@ -374,11 +375,176 @@ public class Canvas extends JPanel implements ActionListener, MouseListener {
         }
         outputLabel.setText(equation);
     }
-    
-    private void optimizeEquationString(){
-        for(int i = 0; i < trueKMapInds.size(); i++){
-            
+
+    private void optimizeEquationString() {
+        int pluses = 0;
+        String equation = this.outputLabel.getText();
+        String result = "S = ";
+        for (int i = 0; i < equation.length(); i++) {
+            if (equation.charAt(i) == '+') {
+                pluses++;
+            }
         }
+        List<String> list = Arrays.asList(equation.split("\\+|\\*|\\="));
+        ArrayList<String> optimize = new ArrayList<>();
+        int lastK = 1;
+        for (int i = 0; i < pluses; i++) {
+            for (int k = 1; k < this.valueCount; k++) {
+                optimize.add(list.get(lastK));
+                lastK++;
+
+            }
+            result += this.optimizePair(new ArrayList<>(optimize));
+            if (pluses > 1) {
+                result += " + ";
+            }
+        }
+        if (pluses == 0) {
+            result = this.outputLabel.getText();
+        }
+        this.optimizedEquationOutput.setText(result);
+    }
+
+    private String optimizePair(ArrayList<String> list) {
+        String result = "";
+        //proměnné a-d
+        boolean a = false;
+        boolean b = false;
+        boolean c = false;
+        boolean d = false;
+        //jestli byli v cyklu nastaveny
+        boolean isA = false;
+        boolean isB = false;
+        boolean isC = false;
+        boolean isD = false;
+        //jestli mám proměnné vypisovat
+        boolean printA = false;
+        boolean printB = false;
+        boolean printC = false;
+        boolean printD = false;
+        for (int i = 0; i < list.size(); i++) {
+            switch (list.get(i)) {
+                case "a":
+                    if (!isA) {
+                        a = true;
+                        isA = true;
+                        printA = true;
+                    } else {
+                        if (!a && printA) {
+                            printA = false;
+                        } else {
+                            printA = true;
+                            a = true;
+                        }
+                    }
+                    break;
+                case "!a":
+                    if (!isA) {
+                        a = false;
+                        isA = true;
+                        printA = true;
+                    } else {
+                        if (a && printA) {
+                            printA = false;
+                        } else {
+                            printA = true;
+                            a = false;
+                        }
+                    }
+                    break;
+                case "b":
+                    if (!isB) {
+                        b = true;
+                        isB = true;
+                        printB = true;
+                    } else {
+                        if (!b && printB) {
+                            printB = false;
+                        } else {
+                            printB = true;
+                            b = true;
+                        }
+                    }
+                    break;
+                case "!b":
+                    if (!isB) {
+                        b = false;
+                        isB = true;
+                        printB = true;
+                    } else {
+                        if (b && printB) {
+                            printB = false;
+                        } else {
+                            printB = true;
+                            b = false;
+                        }
+                    }
+                    break;
+                case "c":
+                    if (!isC) {
+                        c = true;
+                        isC = true;
+                        printC = true;
+                    } else {
+                        if (!c && printC) {
+                            printC = false;
+                        } else {
+                            printC = true;
+                            c = true;
+                        }
+                    }
+                    break;
+                case "!c":
+                    if (!isC) {
+                        c = false;
+                        isC = true;
+                        printC = true;
+                    } else {
+                        if (c && printC) {
+                            printC = false;
+                        } else {
+                            printC = true;
+                            c = false;
+                        }
+                    }
+                    break;
+                case "d":
+                    if (!isD) {
+                        isD = true;
+                        printD = true;
+                        d = true;
+                    } else {
+                        if (!d && printD) {
+                            printD = false;
+                        } else {
+                            d = true;
+                            printD = true;
+                        }
+                    }
+                    break;
+                case "!d":
+                    if (!isD) {
+                        printD = true;
+                        d = false;
+                        isD = true;
+                    } else {
+                        if (d && printD) {
+                            printD = false;
+                        } else {
+                            d = false;
+                            printD = true;
+                        }
+                    }
+            }
+        }
+        result += (printA ? (a ? "a " : "!a ") : "");
+        result += (printA && printB ? "* " : "");
+        result += (printB ? (b ? "b " : "!b ") : "");
+        result += (printC && printB ? "* " : "");
+        result += (printC ? (c ? "c " : "!c ") : "");
+        result += (printD && printC ? "* " : "");
+        result += (printD ? (d ? "d " : "!d ") : "");
+        return result;
     }
 
     public int getValueCount() {
@@ -393,14 +559,16 @@ public class Canvas extends JPanel implements ActionListener, MouseListener {
         this.initTableValues();
         this.initKMapTableValues();
         this.changeEquationString();
+        this.optimizeEquationString();
         this.repaint();
     }
 
     private void changeKMapValues() {
         ArrayList<Boolean> variables = new ArrayList<>();
         for (int j = 0; j < indicators.size(); j++) {//j = řádek indikátorů
-            if(j >= Math.pow(2, this.valueCount))
+            if (j >= Math.pow(2, this.valueCount)) {
                 continue;
+            }
             for (int l = 0; l < indicators.get(j).size(); l++) {//l = sloupec indikátorů
                 variables.add(indicators.get(j).get(l).getValue());
             }
@@ -419,14 +587,6 @@ public class Canvas extends JPanel implements ActionListener, MouseListener {
             variables.clear();
         }
 
-    }
-
-    private void resetKMapValues() {
-        for (int i = 0; i < kMapIndicators.size(); i++) {
-            for (int k = 0; k < kMapIndicators.get(i).size(); k++) {
-                kMapIndicators.get(i).get(k).setValue(false);
-            }
-        }
     }
 
     public ArrayList<ArrayList<Indicator>> getIndicators() {
@@ -456,6 +616,7 @@ public class Canvas extends JPanel implements ActionListener, MouseListener {
             if (output.contains(e.getPoint())) {
                 o.clicked();
                 this.changeEquationString();
+                this.optimizeEquationString();
             }
             this.changeKMapValues();//Změna potřebného prvku K-mapy na true
             this.repaint();
