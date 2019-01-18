@@ -387,9 +387,17 @@ public class Canvas extends JPanel implements ActionListener, MouseListener {
         }
         List<String> list = Arrays.asList(equation.split("\\+|\\*|\\="));
         ArrayList<String> optimize = new ArrayList<>();
+        for(int i = 0; i < list.size(); i++){
+           /*if(list.get(i).equals(""))
+               list.remove(i);
+           if(list.get(i).equals("+"))
+               list.remove(i);*/
+        }
         int lastK = 1;
         for (int i = 0; i < pluses; i++) {
-            for (int k = 1; k < this.valueCount; k++) {
+            for (int k = 1; k <= (((list.size()-1)-lastK == this.valueCount)?this.valueCount:this.valueCount*2); k++) {
+                /*if(pluses % 2 == 0 && k > this.valueCount)
+                    continue;*/
                 optimize.add(list.get(lastK));
                 lastK++;
 
